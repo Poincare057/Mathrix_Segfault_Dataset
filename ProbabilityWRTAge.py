@@ -1,7 +1,6 @@
 import random
 import math
 muP = 28+(14*(random.random()))
-probabilityByAge(muP)
 def probabilityByAge (mu) :
     sigma = 25+(10*(random.random()))
     m = 0.0006+(0.0008*(random.random()))
@@ -24,3 +23,4 @@ def probabilityByAge (mu) :
     print(m)
     print(sumx)
     return popByAge
+probabilityByAge(muP)
