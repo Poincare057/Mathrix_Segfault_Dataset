@@ -9,7 +9,7 @@ def probabilityByAge (mu) :
     sum, sumx = 0, 0
     for a in range(90) :
         weightForPop.append(0.001*(150-a))
-            popCurr = weightForPop[a]*math.e**(-(((a-muP)/sigma)**2)*0.5)
+        popCurr = weightForPop[a]*math.e**(-(((a-muP)/sigma)**2)*0.5)
         popByAge.append(popCurr)
         caseCurr = m*(a+10)
         caseByAge.append(caseCurr)
