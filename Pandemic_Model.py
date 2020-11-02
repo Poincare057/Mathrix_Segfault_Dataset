@@ -1,3 +1,4 @@
+#Pandemic Simulation with Diffusion Model - Anand Balivada November 2020
 import numpy as np
 import matplotlib.pyplot as plt
 
