@@ -75,7 +75,7 @@ for t in range(1, T):
                                          tot_cases[i-1][j-1][t-1]*p[0][i-1][j-1][t-1] + tot_cases[i][j-1][t-1]*p[1][i][j-1][t-1] +
                                          tot_cases[i+1][j-1][t-1]*p[2][i+1][j-1][t-1] + tot_cases[i+1][j][t-1]*p[3][i+1][j][t-1])
             #Prevents no of cases from exceeding population in area
-            if tot_cases[i][j][t-1] + int(cases[i][j][t]) < tot_pop[i][j][239]:
+            if tot_cases[i][j][t-1] + int(cases[i][j][t]) < tot_pop[i][j][T-1]:
                 tot_cases[i][j][t] = tot_cases[i][j][t-1] + int(cases[i][j][t])
             else:
                 tot_cases[i][j][t] = tot_cases[i][j][t-1]
@@ -125,7 +125,7 @@ def net_pop(t):
 def compat(t):
     for i in range(1, gridx):
         for j in range(1, gridy):
-            if tot_pop[i][j][239] < tot_cases[i][j][t]:
+            if tot_pop[i][j][T-1] < tot_cases[i][j][t]:
                 print(i, j, tot_pop[i][j][t], tot_cases[i][j][t])
                 return False
     return True
