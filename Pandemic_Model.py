@@ -1,10 +1,9 @@
-#Pandemic Simulation with Diffusion Model - Anand Balivada November 2020
 import numpy as np
 import matplotlib.pyplot as plt
 
-#City Size 
-gridx = 20
-gridy = 20
+#City Size (gridx and gridy initialized here are +2 more than the actual city size)
+gridx = 22
+gridy = 22
 
 #Total time of simulation
 T = 240
@@ -25,32 +24,44 @@ diff = np.zeros((gridx, gridy, T))
 #Transmission rate and diffusion coefficient
 trans_rate = 1.2
 diff_c = 0.9
-fall = 0.07
+fall = 0.1
 
-#Index case
-x_0 = 10
-y_0 = 10
-cases[x_0][y_0][0] = 100
-tot_cases[x_0][y_0][0] = cases[x_0][y_0][0]
+#Points of index cases and population diffusion start
+no_src = 50
+sources = np.random.rand(2,no_src)
+sources[0] = sources[0]*gridx
+sources[1] = sources[1]*gridy
+common_start = 100
 
-#Initial condition for tot_pop diffusion
-tot_pop[x_0][y_0][0] = 100
-pop_fall = 0.065
+#IT IS ESSENTIAL FOR POPULATION AND CASES TO HAVE THE SAME INITIAL CONDITIONS!!!
+#Index case(s)
+for i in range(no_src):
+    cases[int(sources[0][i])][int(sources[1][i])][0] = common_start
+    tot_cases[int(sources[0][i])][int(sources[1][i])][0] = cases[int(sources[0][i])][int(sources[1][i])][0]
 
+
+#Initial condition(s) for tot_pop diffusion
+pop_fall = 0.1
+for i in range(no_src):
+    tot_pop[int(sources[0][i])][int(sources[1][i])][0] = common_start
+
+#Initializing amount of diffusion for cases (Anisotropic)
 for i in range(gridx):
     for j in range(gridy):
         diff[i][j][0] = 0.001*np.random.randint(400, 1000)*diff_c
         s = diff[i][j][0]
         for k in range(ind - 1):
             #Highly Anistropic Diffusion
-            #p[k][i][j][0] = np.random.random()*s
-            #s -= p[k][i][j][0]
+            p[k][i][j][0] = np.random.random()*s
+            s -= p[k][i][j][0]
             
-            #Diffusion from a point in all directions is the same
-            p[k][i][j][0] = diff[i][j][0]/8
-        p[ind-1] = diff[i][j][0]/8
-        #p[ind-1] = s
+            #For isotropy
+            #p[k][i][j][0] = diff[i][j][0]/8
+        #p[ind-1] = diff[i][j][0]/8
+            
+        p[ind-1] = s
         
+#Exponential Decrease in amount of diffusion with time
 for i in range(gridx):
     for j in range(gridy):
         for t in range(1, T):
@@ -67,6 +78,7 @@ for t in range(1, T):
                                          tot_pop[i-1][j-1][t-1]*diff_c + tot_pop[i][j-1][t-1]*diff_c +
                                          tot_pop[i+1][j-1][t-1]*diff_c + tot_pop[i+1][j][t-1]*diff_c))
 
+#Cases diffusion; highly anistropic and controlled by population
 for t in range(1, T):
     for i in range(1, gridx-1):
         for j in range(1, gridy-1):
@@ -74,6 +86,7 @@ for t in range(1, T):
                                          tot_cases[i-1][j+1][t-1]*p[6][i-1][j+1][t-1] + tot_cases[i-1][j][t-1]*p[7][i-1][j][t-1] +
                                          tot_cases[i-1][j-1][t-1]*p[0][i-1][j-1][t-1] + tot_cases[i][j-1][t-1]*p[1][i][j-1][t-1] +
                                          tot_cases[i+1][j-1][t-1]*p[2][i+1][j-1][t-1] + tot_cases[i+1][j][t-1]*p[3][i+1][j][t-1])
+            
             #Prevents no of cases from exceeding population in area
             if tot_cases[i][j][t-1] + int(cases[i][j][t]) < tot_pop[i][j][T-1]:
                 tot_cases[i][j][t] = tot_cases[i][j][t-1] + int(cases[i][j][t])
@@ -115,17 +128,24 @@ def tot_pop_view(t):
         for j in range(1, gridy):
             print(tot_pop[i][j][t], end = " ")
         print()
+        
 def net_pop(t):
     s = 0
     for i in range(1, gridx):
         for j in range(1, gridy):
             s += tot_pop[i][j][t]
     return s
-            
+
+#These are just debug functions to check that cases <= population everywhere    
 def compat(t):
     for i in range(1, gridx):
         for j in range(1, gridy):
             if tot_pop[i][j][T-1] < tot_cases[i][j][t]:
-                print(i, j, tot_pop[i][j][t], tot_cases[i][j][t])
+                print(i, j, tot_pop[i][j][T-1], tot_cases[i][j][t])
                 return False
+    return True
+def fullcompat():
+    for t in range(1, T):
+        if compat(t) == False:
+            return compat(t)
     return True
