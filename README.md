@@ -19,6 +19,6 @@ respiratory illnesses in covid patients, by age. (Krishna Singh) On dividing a v
 returned in bloopressure(age). 
 This script distributes the number of new cases (Pandemic_Model.cases[i][j][t]) in an area by age, and assigns comorbidities and outcomes. Each entry [Time of infection, Time of reporting, 
 x location, y location, Age, Diabetes, Respiratory, Blood Pressure, Outcome] is added to the file COVID_Dataset.csv, which thus forms a dataset of all COVID cases over days 0-239.
-The file Population.csv consists of the population at each x,y, where 1<=x, <=20. Since Each (x,y) represents the center of a 1 square kilometer region, averaging the population values 
+The file Population.csv consists of the population at each x,y, where 1<=x, y<=20. Since Each (x,y) represents the center of a 1 square kilometer region, averaging the population values 
 actually gives the average population density of the city (basically the population values are population/sq km). 
 
