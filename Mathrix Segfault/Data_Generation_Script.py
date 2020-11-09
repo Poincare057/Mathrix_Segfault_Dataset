@@ -8,7 +8,7 @@ import numpy as np
 
 #Dhanush Srikanth
 def death_val(x):
-    return (0.05*(math.tanh((x - (67 - random.random()*20)/27 - random.random()*10)) + 0.05 + (0.0003*(50 - random.random()*10 - x))))
+    return (0.05*(math.tanh((x - 67)/27)) + 0.05 + (0.0003*(50 - x)))
                  
 #Respiratory Data provided by Krishna Singh
 resp = [0.0021582959853330393, 0.002304820563869844, 0.0024310782597921693, 0.002538174641583738, 0.0026271958264305457, 0.0026992084802208577,
@@ -42,7 +42,8 @@ for i in range(len(diabetes)):
 for i in range(85, 92):
     diabetes += [[i, float(diabetes[84][1])+random.random()*0.05]]
 
-fields = ['Time of Infection', 'x location', 'y location', 'Age', 'Diabetes', 'Respiratory Illnesses', 'Blood Pressure', 'Outcome']
+fields = ['Time of Infection', 'Time of reporting', 'x location', 'y location', 'Age', 'Diabetes', 'Respiratory Illnesses', 'Blood Pressure', 'Outcome']
+popfields = ['x location', 'y location', 'Population']
 
 def casebool(p):
     if random.random() <= p:
@@ -65,8 +66,11 @@ for i in range(len(l)):
 	    agetrials += [i]
     
 datafile = open('COVID_Dataset.csv', 'w')
+popfile = open('Population.csv', 'w')
 writer = csv.writer(datafile)
+popwriter = csv.writer(popfile)
 writer.writerow(fields)
+popwriter.writerow(popfields)           #LMAO this doesn't actually work (can't open multiple writer objects at once?) so Population.csv had to be written from shell.
 print("Population of City", pm.net_pop(239))
 print("Cumulative Infection Count at End", pm.net_cases(239))
 print("mup", mup)
@@ -76,11 +80,16 @@ for t in range(240):
         for j in range(1, 21):
             for k in range(int(pm.cases[i][j][t])):
                 age = agetrials[random.randint(0,len(agetrials)-1)]
-                entry = [t,i,j,age,casebool(float(diabetes[age][1])),casebool(resp[age]/pwrtage.probabilityByAge(mup)[age]),
+                entry = [t, t + random.randint(1, 7), i, j,age,casebool(float(diabetes[age][1])),casebool(resp[age]/pwrtage.probabilityByAge(mup)[age]),
                              casebool(bp.bloodpressure(age)), deathbool(death_val(age))]
                 writer.writerow(entry)
-                
-                    
+
+#LMAO this doesn't actually work (can't open multiple writer objects at once?) so Population.csv had to be written from shell.
+for i in range(1,21):
+    for j in range(1,21):
+        popwriter.writerow([i, j, pm.tot_pop[i][j][239]])
+    
+        
                 
 
 
