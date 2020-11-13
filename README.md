@@ -11,7 +11,7 @@ probabilities whose sum isn't significant. (Param Nayar)
 DiabDSv2-DDS.csv: This gives the probability of diabetes. It is similar to bloodpressure(age), except for a different comorbidity (Diabetes),
 but isn't a function; a list of values. (Pragadeeshwar Kannan)
 
-mathrix-agetorespiratoryproblems.py : This gives the probability of respiratory comorbidities returning a list indexed by age using a four degree polynomial function
+mathrix-agetorespiratoryproblems.py : This gives the probability of respiratory comorbidities returning a list indexed by age using a four degree polynomial function.(Krishna Singh)
 
 ProbabilityWRTAge.py: The function probabilityByAge(mu) is a probability distribution over age of covid patients, returning a list indexed by age. At any age A  this gives the 
 proportion of cases where the patients are of age A. It is a Gaussian; sums to 1. (Harsh Modani)
