@@ -15,8 +15,9 @@ ProbabilityWRTAge.py: The function probabilityByAge(mu) is a probability distrib
 proportion of cases where the patients are of age A. It is a Gaussian; sums to 1. (Harsh Modani)
 
 Data_Generation_Script.py: The function deathval(x) gives the probability that a covid patient of age x dies of the disease (Dhanush Srikanth). 
-The list resp is a normalized histogram of respiratory illnesses in covid patients, by age. (Krishna Singh) On dividing a value of this list by the respective probabilityByAge(mu)[age], one gets a probability similar to what is
-returned in bloopressure(age). 
+
+The list resp is a normalized histogram of respiratory illnesses in covid patients, by age. (Krishna Singh) On dividing a value of this list by the respective probabilityByAge(mu)[age], one gets a probability similar to what is returned in bloopressure(age). 
+
 This script distributes the number of new cases (Pandemic_Model.cases[i][j][t]) in an area by age, and assigns comorbidities and outcomes. Each entry [Time of infection, Time of reporting, 
 x location, y location, Age, Diabetes, Respiratory, Blood Pressure, Outcome] is added to the file COVID_Dataset.csv, which thus forms a dataset of all COVID cases over days 0-239.
 The file Population.csv consists of the population at each x,y, where 1<=x, y<=20. Since Each (x,y) represents the center of a 1 square kilometer region, averaging the population values 
