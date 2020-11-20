@@ -11,13 +11,11 @@ probabilities whose sum isn't significant. (Param Nayar)
 DiabDSv2-DDS.csv: This gives the probability of diabetes. It is similar to bloodpressure(age), except for a different comorbidity (Diabetes),
 but isn't a function; a list of values. (Pragadeeshwar Kannan)
 
-mathrix-agetorespiratoryproblems.py : This gives the probability of respiratory comorbidities returning a list indexed by age using a four degree polynomial function.(Krishna Singh)
-
 ProbabilityWRTAge.py: The function probabilityByAge(mu) is a probability distribution over age of covid patients, returning a list indexed by age. At any age A  this gives the 
 proportion of cases where the patients are of age A. It is a Gaussian; sums to 1. (Harsh Modani)
 
-Data_Generation_Script.py: The function deathval(x) gives the probability that a covid patient of age x dies of the disease (Dhanush Srikanth). The list resp is a normalized histogram of 
-respiratory illnesses in covid patients, by age. (Krishna Singh) On dividing a value of this list by the respective probabilityByAge(mu)[age], one gets a probability similar to what is
+Data_Generation_Script.py: The function deathval(x) gives the probability that a covid patient of age x dies of the disease (Dhanush Srikanth). 
+The list resp is a normalized histogram of respiratory illnesses in covid patients, by age. (Krishna Singh) On dividing a value of this list by the respective probabilityByAge(mu)[age], one gets a probability similar to what is
 returned in bloopressure(age). 
 This script distributes the number of new cases (Pandemic_Model.cases[i][j][t]) in an area by age, and assigns comorbidities and outcomes. Each entry [Time of infection, Time of reporting, 
 x location, y location, Age, Diabetes, Respiratory, Blood Pressure, Outcome] is added to the file COVID_Dataset.csv, which thus forms a dataset of all COVID cases over days 0-239.
